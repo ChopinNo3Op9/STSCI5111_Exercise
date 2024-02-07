@@ -133,6 +133,8 @@ table(d_passengers$Class, PMTP[Passengers])  # see whether the missing price is 
 lookat <- which(PMTP & titanic_data$Class == "2nd Class Passenger")
 titanic_data[lookat,]  # missing price because some were once crew members but then became passengers, so not need to pay price
 
+lookat <- which(PMTP & titanic_data$Class == "1st Class Passenger")
+titanic_data[lookat,]  # some were family friends of crew members who are invited, so not need to pay price
 
 
 
