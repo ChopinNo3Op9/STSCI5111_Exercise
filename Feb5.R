@@ -24,6 +24,38 @@ y_victim <- x_victim[11]
 z_victim <- str_split(y_victim, "<span style=[^<>]+>")[[1]]
 z_victim <- z_victim[-1]
 
+
+format_price <- function(price_text) {
+  # Split the text by space
+  price_parts <- strsplit(price_text, " ")[[1]]
+  
+  # Extract pounds, shillings, and pence
+  pounds <- as.numeric(gsub("[^0-9]", "", price_parts[1]))  # Extract digits after £
+  
+  # Check if shillings are present
+  if (length(price_parts) > 1) {
+    shillings <- as.numeric(gsub("[^0-9]", "", price_parts[2]))  # Extract digits before 's'
+  } else {
+    shillings <- 0
+  }
+  
+  # Check if pence are present
+  if (length(price_parts) > 2) {
+    pence <- as.numeric(gsub("[^0-9]", "", price_parts[3]))  # Extract digits before 'd'
+  } else {
+    pence <- 0
+  }
+  
+  # Convert shillings and pence to pounds
+  total_price <- pounds + shillings / 20 + pence / 240
+  
+  # Format the price to two decimal places
+  formatted_price <- sprintf("%.2f", total_price)
+  
+  # Return the formatted price
+  return(formatted_price)
+}
+
 # Function to clean data
 clean_data <- function(z_data, survived) {
   n <- length(z_data)
@@ -54,7 +86,8 @@ clean_data <- function(z_data, survived) {
     }
     # Assign gender to the "gender" variable
     d$Gender[i] <- gender
-    
+
+
     # Age
     age_str <- str_extract(z_data[i], "Age (\\d+)", group = 1)
     if (is.na(age_str)) {
@@ -71,7 +104,8 @@ clean_data <- function(z_data, survived) {
       }
       d$Age[i] <- age_numeric
     }
-    
+
+
     # class
     d$Class[i] <- str_extract(z_data[i], "<a title=\"([0-9][a-z]{2}\\sClass\\sPassenger|[A-Z][a-z]+\\sCrew|[A-Z][a-z]+\\sStaff)\"", group = 1)
     
@@ -79,10 +113,15 @@ clean_data <- function(z_data, survived) {
     d$Joined[i] <- str_extract(z_data[i], 'Titanic in ([^<>]+)\"', group = 1)
     
     # url
-    d$url[i] <- paste0("https://www.encyclopedia-titanica.org/", str_extract(z_data[i], "url href=(.[^>]+)", group = 1))
+    d$url[i] <- paste0(
+      "https://www.encyclopedia-titanica.org/", 
+      str_extract(z_data[i], "url href=(.[^>]+)", group = 1)
+)
     
     # ticket price
-    d$Price[i] <- str_extract(z_data[i], "£.[^<>]+")
+    price_text <- str_extract(z_data[i], "£.[^<>]+")
+    d$Price[i] <- format_price(price_text)
+    
   }
   return(d)
 }
@@ -139,3 +178,6 @@ titanic_data[lookat,]  # some were family friends of crew members who are invite
 
 
 
+price_text <- "£18"
+formatted_price <- format_price(price_text)
+print(formatted_price)
