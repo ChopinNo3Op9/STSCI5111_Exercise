@@ -117,4 +117,23 @@ ggplot(survival_rates, aes(x = Class, y = Survived)) +
   theme_minimal()
 
 
+HavePrice <- !is.na(titanic_data$Price)
+Passengers <- !is.na(str_extract(titanic_data$Class, "Passenger"))
+sum(HavePrice)
+sum(Passengers)
+table(HavePrice, Passengers) # if haveprice, then must be a passenger
+
+# What is going on with the 31 passengers missing ticket price?
+# define PMTP (passenger missing ticket price)
+PMTP <- Passengers&(!HavePrice)
+sum(PMTP)
+d_passengers <- titanic_data[Passengers,]
+table(d_passengers$Class, PMTP[Passengers])  # see whether the missing price is related to class, unbalanced through different classes
+
+lookat <- which(PMTP & titanic_data$Class == "2nd Class Passenger")
+titanic_data[lookat,]  # missing price because some were once crew members but then became passengers, so not need to pay price
+
+
+
+
 
