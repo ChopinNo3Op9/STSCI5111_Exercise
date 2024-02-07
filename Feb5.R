@@ -117,3 +117,4 @@ ggplot(survival_rates, aes(x = Class, y = Survived)) +
   theme_minimal()
 
 
+
