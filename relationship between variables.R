@@ -30,8 +30,9 @@ plot(prop.table(table(d$Gender, d$Survived))) # mosaic plot, the relative freque
 
 # correlation
 cor(d$Gender == "F", d$Survived == 1)  # lots of NAs
-cor(d$Gender == "F", d$Survived == 1, use = "pairwise.complete.obs")  # only complete cases (i.e., rows with non-missing values for both variables) should be considered when calculating the correlation.
-# 0.48, positive correlation, but not correct/adjust for the sample size
+# only complete cases (i.e., rows with non-missing values for both variables) should be considered when calculating the correlation.
+cor(d$Gender == "F", d$Survived == 1, use = "pairwise.complete.obs") # 0.48, positive correlation, but not correct/adjust for the sample size
+cor(d$Gender == "M", d$Survived == 1, use = "pairwise.complete.obs")  # -0.48
 
 # create a dataset
 fake.d <- data.frame(Gender = c("F", "F", "F", "M", "M", "M"), Survived = c(1, 1, 1, 1, 0, 0))
