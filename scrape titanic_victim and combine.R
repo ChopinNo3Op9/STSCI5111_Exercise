@@ -56,6 +56,51 @@ format_price <- function(price_text) {
   return(formatted_price)
 }
 
+convert_to_years <- function(value) {
+  if (is.na(value)) {
+    return(NA)
+  } else {
+    if (endsWith(value, "m")) {
+      num <- as.numeric(sub("m$", "", value))
+      num <- num / 12
+      return(num)
+    } else {
+      return(as.numeric(value))
+    }
+  }
+}
+
+clean_age <- function(age_text) {
+  # Extract age string using regular expressions
+  age_str <- str_extract(age_text, "Age (\\d+)", group = 1)
+  
+  # Check if age string is NA, and if so, extract from alternate pattern
+  if (is.na(age_str)) {
+    age_str <- str_extract(age_text, "nowrap>([^<>]+)<", group = 1)
+  }
+  
+  # If age string is not NA, clean and convert it to numeric
+  if (!is.na(age_str)) {
+    if (grepl("m", age_str)) {
+      # Age is in months, convert to years
+      age_numeric <- as.numeric(gsub("[^0-9]", "", age_str)) / 12
+    } else {
+      # Age is in years
+      age_numeric <- as.numeric(age_str)
+    }
+    
+    # If age is less than 1, convert to fraction of a year
+    if (age_numeric < 1) {
+      age_numeric <- age_numeric / 12
+    }
+    
+    return(age_numeric)
+  }
+  
+  # Return NA if age string is NA
+  return(NA)
+}
+
 # Function to clean data
 clean_data <- function(z_data, survived) {
   n <- length(z_data)
@@ -78,7 +123,7 @@ clean_data <- function(z_data, survived) {
     gender <- NA
     # Check if prefix contains Mr. or Mrs.
     if (!is.na(d$Prefix[i])) {
-      if (grepl("^Mr", d$Prefix[i])) {
+      if (grepl("^Mr", d$Prefix[i]) || grepl("^Dr", d$Prefix[i])) {
         gender <- "Male"
       } else if (grepl("^Mrs", d$Prefix[i]) || grepl("^Miss", d$Prefix[i]) || grepl("^Ms", d$Prefix[i])) {
         gender <- "Female"
@@ -89,22 +134,8 @@ clean_data <- function(z_data, survived) {
 
 
     # Age
-    age_str <- str_extract(z_data[i], "Age (\\d+)", group = 1)
-    if (is.na(age_str)) {
-      age_str <- str_extract(z_data[i], "nowrap>([^<>]+)<", group = 1)
-    }
-    if (!is.na(age_str)) {
-      if (grepl("m", age_str)) {
-        age_numeric <- as.numeric(gsub("[^0-9]", "", age_str)) / 12
-      } else {
-        age_numeric <- as.numeric(age_str)
-      }
-      if (age_numeric < 1) {
-        age_numeric <- age_numeric / 12
-      }
-      d$Age[i] <- age_numeric
-    }
-
+    d$Age[i] <- clean_age(z_data[i])
+    # df$Age <- sapply(df$Age, convert_to_years)
 
     # class
     d$Class[i] <- str_extract(z_data[i], "<a title=\"([0-9][a-z]{2}\\sClass\\sPassenger|[A-Z][a-z]+\\sCrew|[A-Z][a-z]+\\sStaff)\"", group = 1)
@@ -155,7 +186,6 @@ ggplot(survival_rates, aes(x = Class, y = Survived)) +
        y = "Survival Rate") +
   theme_minimal()
 
-
 HavePrice <- !is.na(titanic_data$Price)
 Passengers <- !is.na(str_extract(titanic_data$Class, "Passenger"))
 sum(HavePrice)
@@ -176,8 +206,7 @@ lookat <- which(PMTP & titanic_data$Class == "1st Class Passenger")
 titanic_data[lookat,]  # some were family friends of crew members who are invited, so not need to pay price
 
 
+write.csv(titanic_data, file = "titanic.csv", row.names = FALSE)
 
 
-price_text <- "£18"
-formatted_price <- format_price(price_text)
-print(formatted_price)
+

@@ -14,10 +14,15 @@ The project aims to analyze the survival data of passengers from the Titanic dis
 4. Generate insights and visualize findings.
 
 ## Methodology
-- **Data Collection**: The data is scraped from the HTML files using R.
-- **Data Cleaning**: The scraped data is cleaned and preprocessed to remove inconsistencies and missing values.
-- **Analysis**: Multivariate analysis techniques are applied to investigate the relationship between various factors and survival rates.
-- **Visualization**: Findings are visualized using plots and charts to facilitate interpretation.
+- **Data Collection**: Data is collected by scraping HTML files using R.
+- **Data Cleaning**: The scraped data undergoes cleaning and preprocessing to eliminate inconsistencies and missing values.
+- **Analysis**: Multivariate analysis techniques are employed to explore the relationships between different factors and survival rates.
+- **Visualization**: Findings are presented visually through plots and charts to aid interpretation.
+
+- **To begin**:
+1. `scrape_titanic_survivor.R` to scrape Titanic survivor data.
+2. `scrape_titanic_victim_and_combine.R` to scrape Titanic victim data and combine it with survivor data.
+3. `relationship_between_variables.R` to explore relationships between variables by running.
 
 ## Hypotheses
 1. Passengers with higher passenger class have better chances of survival.
