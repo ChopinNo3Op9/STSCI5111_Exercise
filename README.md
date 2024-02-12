@@ -1,7 +1,7 @@
 # Titanic Survivor Analysis
 
 ## Overview
-This project delves into analyzing the survival data of passengers from the Titanic disaster. The process encompasses scraping data from `titanic_survivor.html` and `titanic_victim.html`, succeeded by multivariate analysis to investigate the diverse factors influencing survival rates. The inspiration and some code snippets are attributed to @Dana Yang [https://danayang.github.io/] from Cornell University.
+This project delves into analyzing the survival data of passengers from the Titanic disaster. The process encompasses scraping data from `titanic_survivor.html` and `titanic_victim.html`, succeeded by multivariate analysis to investigate the diverse factors influencing survival rates. The inspiration and some code snippets are attributed to @[Dana Yang](https://danayang.github.io/) from Cornell University.
 
 
 ## Data Sources
