@@ -13,13 +13,13 @@ library(stringr)
 # * How much more expensive are first class tickets?
 
 # Read survivor data
-x_survivor <- scan("titanic_survivor.html", what = "character", sep = "\n")
+x_survivor <- scan("data/titanic_survivor.html", what = "character", sep = "\n")
 y_survivor <- x_survivor[11]
 z_survivor <- str_split(y_survivor, "<span style=[^<>]+>")[[1]]
 z_survivor <- z_survivor[-1]
 
 # Read victim data
-x_victim <- scan("titanic_victim.html", what = "character", sep = "\n")
+x_victim <- scan("data/titanic_victim.html", what = "character", sep = "\n")
 y_victim <- x_victim[11]
 z_victim <- str_split(y_victim, "<span style=[^<>]+>")[[1]]
 z_victim <- z_victim[-1]
@@ -206,7 +206,7 @@ lookat <- which(PMTP & titanic_data$Class == "1st Class Passenger")
 titanic_data[lookat,]  # some were family friends of crew members who are invited, so not need to pay price
 
 
-write.csv(titanic_data, file = "titanic.csv", row.names = FALSE)
+write.csv(titanic_data, file = "data/titanic.csv", row.names = FALSE)
 
 
 

@@ -1,6 +1,6 @@
 library(stringr)
 
-x <- scan("titanic_survivor.html", what = "character", sep = "\n")
+x <- scan("data/titanic_survivor.html", what = "character", sep = "\n")
 
 for (i in 1:length(x)) {
   print(paste(i, nchar(x[i])))

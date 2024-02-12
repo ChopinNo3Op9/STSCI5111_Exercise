@@ -1,7 +1,8 @@
 # Titanic Survivor Analysis
 
 ## Overview
-The project aims to analyze the survival data of passengers from the Titanic disaster. The analysis involves scraping data from `titanic_survivor.html` and `titanic_victim.html`, followed by multivariate analysis to explore various factors affecting survival rates.
+This project delves into analyzing the survival data of passengers from the Titanic disaster. The process encompasses scraping data from `titanic_survivor.html` and `titanic_victim.html`, succeeded by multivariate analysis to investigate the diverse factors influencing survival rates. The inspiration and some code snippets are attributed to @Dana Yang [https://danayang.github.io/] from Cornell University.
+
 
 ## Data Sources
 - `titanic_survivor.html`: HTML file containing information about survivors of the Titanic disaster.
@@ -22,7 +23,7 @@ The project aims to analyze the survival data of passengers from the Titanic dis
 - **To begin**:
 1. `scrape_titanic_survivor.R` to scrape Titanic survivor data.
 2. `scrape_titanic_victim_and_combine.R` to scrape Titanic victim data and combine it with survivor data.
-3. `relationship_between_variables.R` to explore relationships between variables by running.
+3. `relationship_between_variables.R` to explore relationships between pairs of two variables.
 
 ## Hypotheses
 1. Passengers with higher passenger class have better chances of survival.
